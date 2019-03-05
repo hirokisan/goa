@@ -9,12 +9,12 @@
 package client
 
 import (
-	chattersvc "goa.design/goa/examples/streaming/gen/chatter"
+	chatter "goa.design/goa/examples/streaming/gen/chatter"
 )
 
 // BuildLoginPayload builds the payload for the chatter login endpoint from CLI
 // flags.
-func BuildLoginPayload(chatterLoginUser string, chatterLoginPassword string) (*chattersvc.LoginPayload, error) {
+func BuildLoginPayload(chatterLoginUser string, chatterLoginPassword string) (*chatter.LoginPayload, error) {
 	var user string
 	{
 		user = chatterLoginUser
@@ -23,7 +23,7 @@ func BuildLoginPayload(chatterLoginUser string, chatterLoginPassword string) (*c
 	{
 		password = chatterLoginPassword
 	}
-	payload := &chattersvc.LoginPayload{}
+	payload := &chatter.LoginPayload{}
 	payload.User = user
 	payload.Password = password
 	return payload, nil
@@ -31,55 +31,55 @@ func BuildLoginPayload(chatterLoginUser string, chatterLoginPassword string) (*c
 
 // BuildEchoerPayload builds the payload for the chatter echoer endpoint from
 // CLI flags.
-func BuildEchoerPayload(chatterEchoerToken string) (*chattersvc.EchoerPayload, error) {
+func BuildEchoerPayload(chatterEchoerToken string) (*chatter.EchoerPayload, error) {
 	var token string
 	{
 		token = chatterEchoerToken
 	}
-	payload := &chattersvc.EchoerPayload{}
+	payload := &chatter.EchoerPayload{}
 	payload.Token = token
 	return payload, nil
 }
 
 // BuildListenerPayload builds the payload for the chatter listener endpoint
 // from CLI flags.
-func BuildListenerPayload(chatterListenerToken string) (*chattersvc.ListenerPayload, error) {
-	var token string
+func BuildListenerPayload(chatterListenerToken2 string) (*chatter.ListenerPayload, error) {
+	var token2 string
 	{
-		token = chatterListenerToken
+		token2 = chatterListenerToken2
 	}
-	payload := &chattersvc.ListenerPayload{}
-	payload.Token = token
+	payload := &chatter.ListenerPayload{}
+	payload.Token = token2
 	return payload, nil
 }
 
 // BuildSummaryPayload builds the payload for the chatter summary endpoint from
 // CLI flags.
-func BuildSummaryPayload(chatterSummaryToken string) (*chattersvc.SummaryPayload, error) {
-	var token string
+func BuildSummaryPayload(chatterSummaryToken2 string) (*chatter.SummaryPayload, error) {
+	var token2 string
 	{
-		token = chatterSummaryToken
+		token2 = chatterSummaryToken2
 	}
-	payload := &chattersvc.SummaryPayload{}
-	payload.Token = token
+	payload := &chatter.SummaryPayload{}
+	payload.Token = token2
 	return payload, nil
 }
 
 // BuildHistoryPayload builds the payload for the chatter history endpoint from
 // CLI flags.
-func BuildHistoryPayload(chatterHistoryView string, chatterHistoryToken string) (*chattersvc.HistoryPayload, error) {
+func BuildHistoryPayload(chatterHistoryView string, chatterHistoryToken2 string) (*chatter.HistoryPayload, error) {
 	var view *string
 	{
 		if chatterHistoryView != "" {
 			view = &chatterHistoryView
 		}
 	}
-	var token string
+	var token2 string
 	{
-		token = chatterHistoryToken
+		token2 = chatterHistoryToken2
 	}
-	payload := &chattersvc.HistoryPayload{}
+	payload := &chatter.HistoryPayload{}
 	payload.View = view
-	payload.Token = token
+	payload.Token = token2
 	return payload, nil
 }

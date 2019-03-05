@@ -6,7 +6,7 @@
 // $ goa gen goa.design/goa/examples/streaming/design -o
 // $(GOPATH)/src/goa.design/goa/examples/streaming
 
-package chattersvc
+package chatter
 
 import (
 	"context"

@@ -12,7 +12,7 @@ import (
 	"context"
 
 	"goa.design/goa"
-	chattersvc "goa.design/goa/examples/streaming/gen/chatter"
+	chatter "goa.design/goa/examples/streaming/gen/chatter"
 	chatterpb "goa.design/goa/examples/streaming/gen/grpc/chatter/pb"
 	goagrpc "goa.design/goa/grpc"
 	"google.golang.org/grpc/codes"
@@ -33,31 +33,30 @@ type ErrorNamer interface {
 	ErrorName() string
 }
 
-// echoerServerStream implements the chattersvc.EchoerServerStream interface.
+// echoerServerStream implements the chatter.EchoerServerStream interface.
 type echoerServerStream struct {
 	stream chatterpb.Chatter_EchoerServer
 }
 
-// listenerServerStream implements the chattersvc.ListenerServerStream
-// interface.
+// listenerServerStream implements the chatter.ListenerServerStream interface.
 type listenerServerStream struct {
 	stream chatterpb.Chatter_ListenerServer
 }
 
-// summaryServerStream implements the chattersvc.SummaryServerStream interface.
+// summaryServerStream implements the chatter.SummaryServerStream interface.
 type summaryServerStream struct {
 	stream chatterpb.Chatter_SummaryServer
 	view   string
 }
 
-// historyServerStream implements the chattersvc.HistoryServerStream interface.
+// historyServerStream implements the chatter.HistoryServerStream interface.
 type historyServerStream struct {
 	stream chatterpb.Chatter_HistoryServer
 	view   string
 }
 
 // New instantiates the server struct with the chatter service endpoints.
-func New(e *chattersvc.Endpoints, uh goagrpc.UnaryHandler, sh goagrpc.StreamHandler) *Server {
+func New(e *chatter.Endpoints, uh goagrpc.UnaryHandler, sh goagrpc.StreamHandler) *Server {
 	return &Server{
 		LoginH:    NewLoginHandler(e.Login, uh),
 		EchoerH:   NewEchoerHandler(e.Echoer, sh),
@@ -119,9 +118,9 @@ func (s *Server) Echoer(stream chatterpb.Chatter_EchoerServer) error {
 		}
 		return goagrpc.EncodeError(err)
 	}
-	ep := &chattersvc.EchoerEndpointInput{
+	ep := &chatter.EchoerEndpointInput{
 		Stream:  &echoerServerStream{stream: stream},
-		Payload: p.(*chattersvc.EchoerPayload),
+		Payload: p.(*chatter.EchoerPayload),
 	}
 	err = s.EchoerH.Handle(ctx, ep)
 	if err != nil {
@@ -165,9 +164,9 @@ func (s *Server) Listener(stream chatterpb.Chatter_ListenerServer) error {
 		}
 		return goagrpc.EncodeError(err)
 	}
-	ep := &chattersvc.ListenerEndpointInput{
+	ep := &chatter.ListenerEndpointInput{
 		Stream:  &listenerServerStream{stream: stream},
-		Payload: p.(*chattersvc.ListenerPayload),
+		Payload: p.(*chatter.ListenerPayload),
 	}
 	err = s.ListenerH.Handle(ctx, ep)
 	if err != nil {
@@ -210,9 +209,9 @@ func (s *Server) Summary(stream chatterpb.Chatter_SummaryServer) error {
 		}
 		return goagrpc.EncodeError(err)
 	}
-	ep := &chattersvc.SummaryEndpointInput{
+	ep := &chatter.SummaryEndpointInput{
 		Stream:  &summaryServerStream{stream: stream},
-		Payload: p.(*chattersvc.SummaryPayload),
+		Payload: p.(*chatter.SummaryPayload),
 	}
 	err = s.SummaryH.Handle(ctx, ep)
 	if err != nil {
@@ -255,9 +254,9 @@ func (s *Server) History(message *chatterpb.HistoryRequest, stream chatterpb.Cha
 		}
 		return goagrpc.EncodeError(err)
 	}
-	ep := &chattersvc.HistoryEndpointInput{
+	ep := &chatter.HistoryEndpointInput{
 		Stream:  &historyServerStream{stream: stream},
-		Payload: p.(*chattersvc.HistoryPayload),
+		Payload: p.(*chatter.HistoryPayload),
 	}
 	err = s.HistoryH.Handle(ctx, ep)
 	if err != nil {
@@ -315,8 +314,8 @@ func (s *listenerServerStream) Close() error {
 
 // SendAndClose streams instances of "chatterpb.ChatSummaryCollection" to the
 // "summary" endpoint gRPC stream.
-func (s *summaryServerStream) SendAndClose(res chattersvc.ChatSummaryCollection) error {
-	vres := chattersvc.NewViewedChatSummaryCollection(res, "default")
+func (s *summaryServerStream) SendAndClose(res chatter.ChatSummaryCollection) error {
+	vres := chatter.NewViewedChatSummaryCollection(res, "default")
 	v := NewChatSummaryCollection(vres.Projected)
 	return s.stream.SendAndClose(v)
 }
@@ -334,8 +333,8 @@ func (s *summaryServerStream) Recv() (string, error) {
 
 // Send streams instances of "chatterpb.HistoryResponse" to the "history"
 // endpoint gRPC stream.
-func (s *historyServerStream) Send(res *chattersvc.ChatSummary) error {
-	vres := chattersvc.NewViewedChatSummary(res, s.view)
+func (s *historyServerStream) Send(res *chatter.ChatSummary) error {
+	vres := chatter.NewViewedChatSummary(res, s.view)
 	v := NewHistoryResponse(vres.Projected)
 	return s.stream.Send(v)
 }

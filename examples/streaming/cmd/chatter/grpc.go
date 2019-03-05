@@ -8,9 +8,9 @@ import (
 	"sync"
 
 	grpcmiddleware "github.com/grpc-ecosystem/go-grpc-middleware"
-	chattersvc "goa.design/goa/examples/streaming/gen/chatter"
+	chatter "goa.design/goa/examples/streaming/gen/chatter"
 	chatterpb "goa.design/goa/examples/streaming/gen/grpc/chatter/pb"
-	chattersvcsvr "goa.design/goa/examples/streaming/gen/grpc/chatter/server"
+	chattersvr "goa.design/goa/examples/streaming/gen/grpc/chatter/server"
 	grpcmdlwr "goa.design/goa/grpc/middleware"
 	"goa.design/goa/middleware"
 	"google.golang.org/grpc"
@@ -18,7 +18,7 @@ import (
 
 // handleGRPCServer starts configures and starts a gRPC server on the given
 // URL. It shuts down the server if any error is received in the error channel.
-func handleGRPCServer(ctx context.Context, u *url.URL, chatterEndpoints *chattersvc.Endpoints, wg *sync.WaitGroup, errc chan error, logger *log.Logger, debug bool) {
+func handleGRPCServer(ctx context.Context, u *url.URL, chatterEndpoints *chatter.Endpoints, wg *sync.WaitGroup, errc chan error, logger *log.Logger, debug bool) {
 
 	// Setup goa log adapter.
 	var (
@@ -33,10 +33,10 @@ func handleGRPCServer(ctx context.Context, u *url.URL, chatterEndpoints *chatter
 	// the service input and output data structures to gRPC requests and
 	// responses.
 	var (
-		chatterServer *chattersvcsvr.Server
+		chatterServer *chattersvr.Server
 	)
 	{
-		chatterServer = chattersvcsvr.New(chatterEndpoints, nil, nil)
+		chatterServer = chattersvr.New(chatterEndpoints, nil, nil)
 	}
 
 	// Initialize gRPC server with the middleware.

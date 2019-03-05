@@ -10,8 +10,8 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
-	chattersvc "goa.design/goa/examples/streaming/gen/chatter"
-	chattersvcsvr "goa.design/goa/examples/streaming/gen/http/chatter/server"
+	chatter "goa.design/goa/examples/streaming/gen/chatter"
+	chattersvr "goa.design/goa/examples/streaming/gen/http/chatter/server"
 	goahttp "goa.design/goa/http"
 	httpmdlwr "goa.design/goa/http/middleware"
 	"goa.design/goa/middleware"
@@ -19,7 +19,7 @@ import (
 
 // handleHTTPServer starts configures and starts a HTTP server on the given
 // URL. It shuts down the server if any error is received in the error channel.
-func handleHTTPServer(ctx context.Context, u *url.URL, chatterEndpoints *chattersvc.Endpoints, wg *sync.WaitGroup, errc chan error, logger *log.Logger, debug bool) {
+func handleHTTPServer(ctx context.Context, u *url.URL, chatterEndpoints *chatter.Endpoints, wg *sync.WaitGroup, errc chan error, logger *log.Logger, debug bool) {
 
 	// Setup goa log adapter.
 	var (
@@ -50,15 +50,15 @@ func handleHTTPServer(ctx context.Context, u *url.URL, chatterEndpoints *chatter
 	// the service input and output data structures to HTTP requests and
 	// responses.
 	var (
-		chatterServer *chattersvcsvr.Server
+		chatterServer *chattersvr.Server
 	)
 	{
 		eh := errorHandler(logger)
 		upgrader := &websocket.Upgrader{}
-		chatterServer = chattersvcsvr.New(chatterEndpoints, mux, dec, enc, eh, upgrader, nil)
+		chatterServer = chattersvr.New(chatterEndpoints, mux, dec, enc, eh, upgrader, nil)
 	}
 	// Configure the mux.
-	chattersvcsvr.Mount(mux, chatterServer)
+	chattersvr.Mount(mux, chatterServer)
 
 	// Wrap the multiplexer with additional middlewares. Middlewares mounted
 	// here apply to all the service endpoints.

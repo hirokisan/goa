@@ -14,7 +14,7 @@ import (
 	"strings"
 
 	goa "goa.design/goa"
-	chattersvc "goa.design/goa/examples/streaming/gen/chatter"
+	chatter "goa.design/goa/examples/streaming/gen/chatter"
 	goahttp "goa.design/goa/http"
 )
 
@@ -57,7 +57,7 @@ func EncodeLoginError(encoder func(context.Context, http.ResponseWriter) goahttp
 		}
 		switch en.ErrorName() {
 		case "unauthorized":
-			res := v.(chattersvc.Unauthorized)
+			res := v.(chatter.Unauthorized)
 			enc := encoder(ctx, w)
 			body := NewLoginUnauthorizedResponseBody(res)
 			w.Header().Set("goa-error", "unauthorized")
@@ -106,14 +106,14 @@ func EncodeEchoerError(encoder func(context.Context, http.ResponseWriter) goahtt
 		}
 		switch en.ErrorName() {
 		case "invalid-scopes":
-			res := v.(chattersvc.InvalidScopes)
+			res := v.(chatter.InvalidScopes)
 			enc := encoder(ctx, w)
 			body := NewEchoerInvalidScopesResponseBody(res)
 			w.Header().Set("goa-error", "invalid-scopes")
 			w.WriteHeader(http.StatusForbidden)
 			return enc.Encode(body)
 		case "unauthorized":
-			res := v.(chattersvc.Unauthorized)
+			res := v.(chatter.Unauthorized)
 			enc := encoder(ctx, w)
 			body := NewEchoerUnauthorizedResponseBody(res)
 			w.Header().Set("goa-error", "unauthorized")
@@ -162,14 +162,14 @@ func EncodeListenerError(encoder func(context.Context, http.ResponseWriter) goah
 		}
 		switch en.ErrorName() {
 		case "invalid-scopes":
-			res := v.(chattersvc.InvalidScopes)
+			res := v.(chatter.InvalidScopes)
 			enc := encoder(ctx, w)
 			body := NewListenerInvalidScopesResponseBody(res)
 			w.Header().Set("goa-error", "invalid-scopes")
 			w.WriteHeader(http.StatusForbidden)
 			return enc.Encode(body)
 		case "unauthorized":
-			res := v.(chattersvc.Unauthorized)
+			res := v.(chatter.Unauthorized)
 			enc := encoder(ctx, w)
 			body := NewListenerUnauthorizedResponseBody(res)
 			w.Header().Set("goa-error", "unauthorized")
@@ -218,14 +218,14 @@ func EncodeSummaryError(encoder func(context.Context, http.ResponseWriter) goaht
 		}
 		switch en.ErrorName() {
 		case "invalid-scopes":
-			res := v.(chattersvc.InvalidScopes)
+			res := v.(chatter.InvalidScopes)
 			enc := encoder(ctx, w)
 			body := NewSummaryInvalidScopesResponseBody(res)
 			w.Header().Set("goa-error", "invalid-scopes")
 			w.WriteHeader(http.StatusForbidden)
 			return enc.Encode(body)
 		case "unauthorized":
-			res := v.(chattersvc.Unauthorized)
+			res := v.(chatter.Unauthorized)
 			enc := encoder(ctx, w)
 			body := NewSummaryUnauthorizedResponseBody(res)
 			w.Header().Set("goa-error", "unauthorized")
@@ -279,14 +279,14 @@ func EncodeHistoryError(encoder func(context.Context, http.ResponseWriter) goaht
 		}
 		switch en.ErrorName() {
 		case "invalid-scopes":
-			res := v.(chattersvc.InvalidScopes)
+			res := v.(chatter.InvalidScopes)
 			enc := encoder(ctx, w)
 			body := NewHistoryInvalidScopesResponseBody(res)
 			w.Header().Set("goa-error", "invalid-scopes")
 			w.WriteHeader(http.StatusForbidden)
 			return enc.Encode(body)
 		case "unauthorized":
-			res := v.(chattersvc.Unauthorized)
+			res := v.(chatter.Unauthorized)
 			enc := encoder(ctx, w)
 			body := NewHistoryUnauthorizedResponseBody(res)
 			w.Header().Set("goa-error", "unauthorized")

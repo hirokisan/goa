@@ -49,12 +49,12 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 
 		securedServiceDoublySecureFlags       = flag.NewFlagSet("doubly-secure", flag.ExitOnError)
 		securedServiceDoublySecureMessageFlag = securedServiceDoublySecureFlags.String("message", "", "")
-		securedServiceDoublySecureTokenFlag   = securedServiceDoublySecureFlags.String("token", "REQUIRED", "")
+		securedServiceDoublySecureToken2Flag  = securedServiceDoublySecureFlags.String("token2", "REQUIRED", "")
 
 		securedServiceAlsoDoublySecureFlags          = flag.NewFlagSet("also-doubly-secure", flag.ExitOnError)
 		securedServiceAlsoDoublySecureMessageFlag    = securedServiceAlsoDoublySecureFlags.String("message", "", "")
 		securedServiceAlsoDoublySecureOauthTokenFlag = securedServiceAlsoDoublySecureFlags.String("oauth-token", "", "")
-		securedServiceAlsoDoublySecureTokenFlag      = securedServiceAlsoDoublySecureFlags.String("token", "", "")
+		securedServiceAlsoDoublySecureToken2Flag     = securedServiceAlsoDoublySecureFlags.String("token2", "", "")
 	)
 	securedServiceFlags.Usage = securedServiceUsage
 	securedServiceSigninFlags.Usage = securedServiceSigninUsage
@@ -141,10 +141,10 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 				data, err = securedservicec.BuildSecurePayload(*securedServiceSecureMessageFlag, *securedServiceSecureTokenFlag)
 			case "doubly-secure":
 				endpoint = c.DoublySecure()
-				data, err = securedservicec.BuildDoublySecurePayload(*securedServiceDoublySecureMessageFlag, *securedServiceDoublySecureTokenFlag)
+				data, err = securedservicec.BuildDoublySecurePayload(*securedServiceDoublySecureMessageFlag, *securedServiceDoublySecureToken2Flag)
 			case "also-doubly-secure":
 				endpoint = c.AlsoDoublySecure()
-				data, err = securedservicec.BuildAlsoDoublySecurePayload(*securedServiceAlsoDoublySecureMessageFlag, *securedServiceAlsoDoublySecureOauthTokenFlag, *securedServiceAlsoDoublySecureTokenFlag)
+				data, err = securedservicec.BuildAlsoDoublySecurePayload(*securedServiceAlsoDoublySecureMessageFlag, *securedServiceAlsoDoublySecureOauthTokenFlag, *securedServiceAlsoDoublySecureToken2Flag)
 			}
 		}
 	}
@@ -199,32 +199,32 @@ Example:
 }
 
 func securedServiceDoublySecureUsage() {
-	fmt.Fprintf(os.Stderr, `%s [flags] secured-service doubly-secure -message JSON -token STRING
+	fmt.Fprintf(os.Stderr, `%s [flags] secured-service doubly-secure -message JSON -token2 STRING
 
 This action is secured with the jwt scheme and also requires an API key query string.
     -message JSON: 
-    -token STRING: 
+    -token2 STRING: 
 
 Example:
     `+os.Args[0]+` secured-service doubly-secure --message '{
       "key": "abcdef12345"
-   }' --token "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
+   }' --token2 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
 `, os.Args[0])
 }
 
 func securedServiceAlsoDoublySecureUsage() {
-	fmt.Fprintf(os.Stderr, `%s [flags] secured-service also-doubly-secure -message JSON -oauth-token STRING -token STRING
+	fmt.Fprintf(os.Stderr, `%s [flags] secured-service also-doubly-secure -message JSON -oauth-token STRING -token2 STRING
 
 This action is secured with the jwt scheme and also requires an API key header.
     -message JSON: 
     -oauth-token STRING: 
-    -token STRING: 
+    -token2 STRING: 
 
 Example:
     `+os.Args[0]+` secured-service also-doubly-secure --message '{
       "key": "abcdef12345",
       "password": "password",
       "username": "user"
-   }' --oauth-token "In et sit sunt ut." --token "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
+   }' --oauth-token "In et sit sunt ut." --token2 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
 `, os.Args[0])
 }

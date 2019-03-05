@@ -13,7 +13,7 @@ import (
 	"strings"
 
 	goa "goa.design/goa"
-	chattersvc "goa.design/goa/examples/streaming/gen/chatter"
+	chatter "goa.design/goa/examples/streaming/gen/chatter"
 	goagrpc "goa.design/goa/grpc"
 	"google.golang.org/grpc/metadata"
 )
@@ -52,7 +52,7 @@ func DecodeLoginRequest(ctx context.Context, v interface{}, md metadata.MD) (int
 	if err != nil {
 		return nil, err
 	}
-	var payload *chattersvc.LoginPayload
+	var payload *chatter.LoginPayload
 	{
 		payload = NewLoginPayload(user, password)
 	}
@@ -76,7 +76,7 @@ func DecodeEchoerRequest(ctx context.Context, v interface{}, md metadata.MD) (in
 	if err != nil {
 		return nil, err
 	}
-	var payload *chattersvc.EchoerPayload
+	var payload *chatter.EchoerPayload
 	{
 		payload = NewEchoerPayload(token)
 		if strings.Contains(payload.Token, " ") {
@@ -92,22 +92,22 @@ func DecodeEchoerRequest(ctx context.Context, v interface{}, md metadata.MD) (in
 // endpoint.
 func DecodeListenerRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
 	var (
-		token string
-		err   error
+		token2 string
+		err    error
 	)
 	{
 		if vals := md.Get("authorization"); len(vals) == 0 {
 			err = goa.MergeErrors(err, goa.MissingFieldError("authorization", "metadata"))
 		} else {
-			token = vals[0]
+			token2 = vals[0]
 		}
 	}
 	if err != nil {
 		return nil, err
 	}
-	var payload *chattersvc.ListenerPayload
+	var payload *chatter.ListenerPayload
 	{
-		payload = NewListenerPayload(token)
+		payload = NewListenerPayload(token2)
 		if strings.Contains(payload.Token, " ") {
 			// Remove authorization scheme prefix (e.g. "Bearer")
 			cred := strings.SplitN(payload.Token, " ", 2)[1]
@@ -121,22 +121,22 @@ func DecodeListenerRequest(ctx context.Context, v interface{}, md metadata.MD) (
 // endpoint.
 func DecodeSummaryRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
 	var (
-		token string
-		err   error
+		token2 string
+		err    error
 	)
 	{
 		if vals := md.Get("authorization"); len(vals) == 0 {
 			err = goa.MergeErrors(err, goa.MissingFieldError("authorization", "metadata"))
 		} else {
-			token = vals[0]
+			token2 = vals[0]
 		}
 	}
 	if err != nil {
 		return nil, err
 	}
-	var payload *chattersvc.SummaryPayload
+	var payload *chatter.SummaryPayload
 	{
-		payload = NewSummaryPayload(token)
+		payload = NewSummaryPayload(token2)
 		if strings.Contains(payload.Token, " ") {
 			// Remove authorization scheme prefix (e.g. "Bearer")
 			cred := strings.SplitN(payload.Token, " ", 2)[1]
@@ -150,9 +150,9 @@ func DecodeSummaryRequest(ctx context.Context, v interface{}, md metadata.MD) (i
 // endpoint.
 func DecodeHistoryRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
 	var (
-		view  *string
-		token string
-		err   error
+		view   *string
+		token2 string
+		err    error
 	)
 	{
 		if vals := md.Get("view"); len(vals) > 0 {
@@ -161,15 +161,15 @@ func DecodeHistoryRequest(ctx context.Context, v interface{}, md metadata.MD) (i
 		if vals := md.Get("authorization"); len(vals) == 0 {
 			err = goa.MergeErrors(err, goa.MissingFieldError("authorization", "metadata"))
 		} else {
-			token = vals[0]
+			token2 = vals[0]
 		}
 	}
 	if err != nil {
 		return nil, err
 	}
-	var payload *chattersvc.HistoryPayload
+	var payload *chatter.HistoryPayload
 	{
-		payload = NewHistoryPayload(view, token)
+		payload = NewHistoryPayload(view, token2)
 		if strings.Contains(payload.Token, " ") {
 			// Remove authorization scheme prefix (e.g. "Bearer")
 			cred := strings.SplitN(payload.Token, " ", 2)[1]

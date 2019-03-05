@@ -15,7 +15,7 @@ import (
 	"os"
 
 	goa "goa.design/goa"
-	chattersvcc "goa.design/goa/examples/streaming/gen/http/chatter/client"
+	chatterc "goa.design/goa/examples/streaming/gen/http/chatter/client"
 	goahttp "goa.design/goa/http"
 )
 
@@ -144,23 +144,23 @@ func ParseEndpoint(
 	{
 		switch svcn {
 		case "chatter":
-			c := chattersvcc.NewClient(scheme, host, doer, enc, dec, restore, dialer, connConfigFn)
+			c := chatterc.NewClient(scheme, host, doer, enc, dec, restore, dialer, connConfigFn)
 			switch epn {
 			case "login":
 				endpoint = c.Login()
-				data, err = chattersvcc.BuildLoginPayload(*chatterLoginUserFlag, *chatterLoginPasswordFlag)
+				data, err = chatterc.BuildLoginPayload(*chatterLoginUserFlag, *chatterLoginPasswordFlag)
 			case "echoer":
 				endpoint = c.Echoer()
-				data, err = chattersvcc.BuildEchoerPayload(*chatterEchoerTokenFlag)
+				data, err = chatterc.BuildEchoerPayload(*chatterEchoerTokenFlag)
 			case "listener":
 				endpoint = c.Listener()
-				data, err = chattersvcc.BuildListenerPayload(*chatterListenerTokenFlag)
+				data, err = chatterc.BuildListenerPayload(*chatterListenerTokenFlag)
 			case "summary":
 				endpoint = c.Summary()
-				data, err = chattersvcc.BuildSummaryPayload(*chatterSummaryTokenFlag)
+				data, err = chatterc.BuildSummaryPayload(*chatterSummaryTokenFlag)
 			case "history":
 				endpoint = c.History()
-				data, err = chattersvcc.BuildHistoryPayload(*chatterHistoryViewFlag, *chatterHistoryTokenFlag)
+				data, err = chatterc.BuildHistoryPayload(*chatterHistoryViewFlag, *chatterHistoryTokenFlag)
 			}
 		}
 	}

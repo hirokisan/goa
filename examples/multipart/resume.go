@@ -1,4 +1,4 @@
-package api
+package resumeapi
 
 import (
 	"context"

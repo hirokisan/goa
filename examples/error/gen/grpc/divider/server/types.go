@@ -9,14 +9,14 @@
 package server
 
 import (
-	dividersvc "goa.design/goa/examples/error/gen/divider"
+	divider "goa.design/goa/examples/error/gen/divider"
 	dividerpb "goa.design/goa/examples/error/gen/grpc/divider/pb"
 )
 
 // NewIntOperands builds the payload of the "integer_divide" endpoint of the
 // "divider" service from the gRPC request type.
-func NewIntOperands(message *dividerpb.IntegerDivideRequest) *dividersvc.IntOperands {
-	payload := &dividersvc.IntOperands{
+func NewIntOperands(message *dividerpb.IntegerDivideRequest) *divider.IntOperands {
+	payload := &divider.IntOperands{
 		A: int(message.A),
 		B: int(message.B),
 	}
@@ -33,8 +33,8 @@ func NewIntegerDivideResponse(result int) *dividerpb.IntegerDivideResponse {
 
 // NewFloatOperands builds the payload of the "divide" endpoint of the
 // "divider" service from the gRPC request type.
-func NewFloatOperands(message *dividerpb.DivideRequest) *dividersvc.FloatOperands {
-	payload := &dividersvc.FloatOperands{
+func NewFloatOperands(message *dividerpb.DivideRequest) *divider.FloatOperands {
+	payload := &divider.FloatOperands{
 		A: message.A,
 		B: message.B,
 	}

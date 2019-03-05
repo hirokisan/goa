@@ -11,8 +11,8 @@ import (
 	"strings"
 	"sync"
 
-	chatter "goa.design/goa/examples/streaming"
-	chattersvc "goa.design/goa/examples/streaming/gen/chatter"
+	chatterapi "goa.design/goa/examples/streaming"
+	chatter "goa.design/goa/examples/streaming/gen/chatter"
 )
 
 func main() {
@@ -33,24 +33,24 @@ func main() {
 		logger *log.Logger
 	)
 	{
-		logger = log.New(os.Stderr, "[chatter] ", log.Ltime)
+		logger = log.New(os.Stderr, "[chatterapi] ", log.Ltime)
 	}
 
 	// Initialize the services.
 	var (
-		chatterSvc chattersvc.Service
+		chatterSvc chatter.Service
 	)
 	{
-		chatterSvc = chatter.NewChatter(logger)
+		chatterSvc = chatterapi.NewChatter(logger)
 	}
 
 	// Wrap the services in endpoints that can be invoked from other services
 	// potentially running in different processes.
 	var (
-		chatterEndpoints *chattersvc.Endpoints
+		chatterEndpoints *chatter.Endpoints
 	)
 	{
-		chatterEndpoints = chattersvc.NewEndpoints(chatterSvc)
+		chatterEndpoints = chatter.NewEndpoints(chatterSvc)
 	}
 
 	// Create channel used by both the signal handler and server goroutines

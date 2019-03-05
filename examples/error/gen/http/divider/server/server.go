@@ -13,7 +13,7 @@ import (
 	"net/http"
 
 	goa "goa.design/goa"
-	dividersvc "goa.design/goa/examples/error/gen/divider"
+	divider "goa.design/goa/examples/error/gen/divider"
 	goahttp "goa.design/goa/http"
 )
 
@@ -43,7 +43,7 @@ type MountPoint struct {
 
 // New instantiates HTTP handlers for all the divider service endpoints.
 func New(
-	e *dividersvc.Endpoints,
+	e *divider.Endpoints,
 	mux goahttp.Muxer,
 	dec func(*http.Request) goahttp.Decoder,
 	enc func(context.Context, http.ResponseWriter) goahttp.Encoder,

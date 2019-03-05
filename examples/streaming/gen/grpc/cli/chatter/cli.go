@@ -14,7 +14,7 @@ import (
 	"os"
 
 	goa "goa.design/goa"
-	chattersvcc "goa.design/goa/examples/streaming/gen/grpc/chatter/client"
+	chatterc "goa.design/goa/examples/streaming/gen/grpc/chatter/client"
 	grpc "google.golang.org/grpc"
 )
 
@@ -46,15 +46,15 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 		chatterEchoerFlags     = flag.NewFlagSet("echoer", flag.ExitOnError)
 		chatterEchoerTokenFlag = chatterEchoerFlags.String("token", "REQUIRED", "")
 
-		chatterListenerFlags     = flag.NewFlagSet("listener", flag.ExitOnError)
-		chatterListenerTokenFlag = chatterListenerFlags.String("token", "REQUIRED", "")
+		chatterListenerFlags      = flag.NewFlagSet("listener", flag.ExitOnError)
+		chatterListenerToken2Flag = chatterListenerFlags.String("token2", "REQUIRED", "")
 
-		chatterSummaryFlags     = flag.NewFlagSet("summary", flag.ExitOnError)
-		chatterSummaryTokenFlag = chatterSummaryFlags.String("token", "REQUIRED", "")
+		chatterSummaryFlags      = flag.NewFlagSet("summary", flag.ExitOnError)
+		chatterSummaryToken2Flag = chatterSummaryFlags.String("token2", "REQUIRED", "")
 
-		chatterHistoryFlags     = flag.NewFlagSet("history", flag.ExitOnError)
-		chatterHistoryViewFlag  = chatterHistoryFlags.String("view", "", "")
-		chatterHistoryTokenFlag = chatterHistoryFlags.String("token", "REQUIRED", "")
+		chatterHistoryFlags      = flag.NewFlagSet("history", flag.ExitOnError)
+		chatterHistoryViewFlag   = chatterHistoryFlags.String("view", "", "")
+		chatterHistoryToken2Flag = chatterHistoryFlags.String("token2", "REQUIRED", "")
 	)
 	chatterFlags.Usage = chatterUsage
 	chatterLoginFlags.Usage = chatterLoginUsage
@@ -135,23 +135,23 @@ func ParseEndpoint(cc *grpc.ClientConn, opts ...grpc.CallOption) (goa.Endpoint, 
 	{
 		switch svcn {
 		case "chatter":
-			c := chattersvcc.NewClient(cc, opts...)
+			c := chatterc.NewClient(cc, opts...)
 			switch epn {
 			case "login":
 				endpoint = c.Login()
-				data, err = chattersvcc.BuildLoginPayload(*chatterLoginUserFlag, *chatterLoginPasswordFlag)
+				data, err = chatterc.BuildLoginPayload(*chatterLoginUserFlag, *chatterLoginPasswordFlag)
 			case "echoer":
 				endpoint = c.Echoer()
-				data, err = chattersvcc.BuildEchoerPayload(*chatterEchoerTokenFlag)
+				data, err = chatterc.BuildEchoerPayload(*chatterEchoerTokenFlag)
 			case "listener":
 				endpoint = c.Listener()
-				data, err = chattersvcc.BuildListenerPayload(*chatterListenerTokenFlag)
+				data, err = chatterc.BuildListenerPayload(*chatterListenerToken2Flag)
 			case "summary":
 				endpoint = c.Summary()
-				data, err = chattersvcc.BuildSummaryPayload(*chatterSummaryTokenFlag)
+				data, err = chatterc.BuildSummaryPayload(*chatterSummaryToken2Flag)
 			case "history":
 				endpoint = c.History()
-				data, err = chattersvcc.BuildHistoryPayload(*chatterHistoryViewFlag, *chatterHistoryTokenFlag)
+				data, err = chatterc.BuildHistoryPayload(*chatterHistoryViewFlag, *chatterHistoryToken2Flag)
 			}
 		}
 	}
@@ -203,35 +203,35 @@ Example:
 }
 
 func chatterListenerUsage() {
-	fmt.Fprintf(os.Stderr, `%s [flags] chatter listener -token STRING
+	fmt.Fprintf(os.Stderr, `%s [flags] chatter listener -token2 STRING
 
 Listens to the messages sent by the client.
-    -token STRING: 
+    -token2 STRING: 
 
 Example:
-    `+os.Args[0]+` chatter listener --token "Unde ea recusandae."
+    `+os.Args[0]+` chatter listener --token2 "Unde ea recusandae."
 `, os.Args[0])
 }
 
 func chatterSummaryUsage() {
-	fmt.Fprintf(os.Stderr, `%s [flags] chatter summary -token STRING
+	fmt.Fprintf(os.Stderr, `%s [flags] chatter summary -token2 STRING
 
 Summarizes the chat messages sent by the client.
-    -token STRING: 
+    -token2 STRING: 
 
 Example:
-    `+os.Args[0]+` chatter summary --token "Ullam quia neque quis qui quia optio."
+    `+os.Args[0]+` chatter summary --token2 "Ullam quia neque quis qui quia optio."
 `, os.Args[0])
 }
 
 func chatterHistoryUsage() {
-	fmt.Fprintf(os.Stderr, `%s [flags] chatter history -view STRING -token STRING
+	fmt.Fprintf(os.Stderr, `%s [flags] chatter history -view STRING -token2 STRING
 
 Returns the chat messages sent to the server.
     -view STRING: 
-    -token STRING: 
+    -token2 STRING: 
 
 Example:
-    `+os.Args[0]+` chatter history --view "Et tempora temporibus eligendi." --token "Excepturi quia soluta."
+    `+os.Args[0]+` chatter history --view "Et tempora temporibus eligendi." --token2 "Excepturi quia soluta."
 `, os.Args[0])
 }

@@ -62,7 +62,7 @@ func BuildSecurePayload(securedServiceSecureMessage string, securedServiceSecure
 
 // BuildDoublySecurePayload builds the payload for the secured_service
 // doubly_secure endpoint from CLI flags.
-func BuildDoublySecurePayload(securedServiceDoublySecureMessage string, securedServiceDoublySecureToken string) (*securedservice.DoublySecurePayload, error) {
+func BuildDoublySecurePayload(securedServiceDoublySecureMessage string, securedServiceDoublySecureToken2 string) (*securedservice.DoublySecurePayload, error) {
 	var err error
 	var message secured_servicepb.DoublySecureRequest
 	{
@@ -73,9 +73,9 @@ func BuildDoublySecurePayload(securedServiceDoublySecureMessage string, securedS
 			}
 		}
 	}
-	var token string
+	var token2 string
 	{
-		token = securedServiceDoublySecureToken
+		token2 = securedServiceDoublySecureToken2
 	}
 	if err != nil {
 		return nil, err
@@ -83,13 +83,13 @@ func BuildDoublySecurePayload(securedServiceDoublySecureMessage string, securedS
 	payload := &securedservice.DoublySecurePayload{
 		Key: message.Key,
 	}
-	payload.Token = token
+	payload.Token = token2
 	return payload, nil
 }
 
 // BuildAlsoDoublySecurePayload builds the payload for the secured_service
 // also_doubly_secure endpoint from CLI flags.
-func BuildAlsoDoublySecurePayload(securedServiceAlsoDoublySecureMessage string, securedServiceAlsoDoublySecureOauthToken string, securedServiceAlsoDoublySecureToken string) (*securedservice.AlsoDoublySecurePayload, error) {
+func BuildAlsoDoublySecurePayload(securedServiceAlsoDoublySecureMessage string, securedServiceAlsoDoublySecureOauthToken string, securedServiceAlsoDoublySecureToken2 string) (*securedservice.AlsoDoublySecurePayload, error) {
 	var err error
 	var message secured_servicepb.AlsoDoublySecureRequest
 	{
@@ -106,10 +106,10 @@ func BuildAlsoDoublySecurePayload(securedServiceAlsoDoublySecureMessage string, 
 			oauthToken = &securedServiceAlsoDoublySecureOauthToken
 		}
 	}
-	var token *string
+	var token2 *string
 	{
-		if securedServiceAlsoDoublySecureToken != "" {
-			token = &securedServiceAlsoDoublySecureToken
+		if securedServiceAlsoDoublySecureToken2 != "" {
+			token2 = &securedServiceAlsoDoublySecureToken2
 		}
 	}
 	if err != nil {
@@ -121,6 +121,6 @@ func BuildAlsoDoublySecurePayload(securedServiceAlsoDoublySecureMessage string, 
 		Key:      &message.Key,
 	}
 	payload.OauthToken = oauthToken
-	payload.Token = token
+	payload.Token = token2
 	return payload, nil
 }

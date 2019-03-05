@@ -15,7 +15,7 @@ import (
 	"os"
 
 	goa "goa.design/goa"
-	dividersvcc "goa.design/goa/examples/error/gen/http/divider/client"
+	dividerc "goa.design/goa/examples/error/gen/http/divider/client"
 	goahttp "goa.design/goa/http"
 )
 
@@ -121,14 +121,14 @@ func ParseEndpoint(
 	{
 		switch svcn {
 		case "divider":
-			c := dividersvcc.NewClient(scheme, host, doer, enc, dec, restore)
+			c := dividerc.NewClient(scheme, host, doer, enc, dec, restore)
 			switch epn {
 			case "integer-divide":
 				endpoint = c.IntegerDivide()
-				data, err = dividersvcc.BuildIntegerDividePayload(*dividerIntegerDivideAFlag, *dividerIntegerDivideBFlag)
+				data, err = dividerc.BuildIntegerDividePayload(*dividerIntegerDivideAFlag, *dividerIntegerDivideBFlag)
 			case "divide":
 				endpoint = c.Divide()
-				data, err = dividersvcc.BuildDividePayload(*dividerDivideAFlag, *dividerDivideBFlag)
+				data, err = dividerc.BuildDividePayload(*dividerDivideAFlag, *dividerDivideBFlag)
 			}
 		}
 	}

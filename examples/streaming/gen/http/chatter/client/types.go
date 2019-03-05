@@ -10,8 +10,8 @@ package client
 
 import (
 	goa "goa.design/goa"
-	chattersvc "goa.design/goa/examples/streaming/gen/chatter"
-	chattersvcviews "goa.design/goa/examples/streaming/gen/chatter/views"
+	chatter "goa.design/goa/examples/streaming/gen/chatter"
+	chatterviews "goa.design/goa/examples/streaming/gen/chatter/views"
 )
 
 // SummaryResponseBody is the type of the "chatter" service "summary" endpoint
@@ -77,45 +77,45 @@ type ChatSummaryResponse struct {
 
 // NewLoginUnauthorized builds a chatter service login endpoint unauthorized
 // error.
-func NewLoginUnauthorized(body LoginUnauthorizedResponseBody) chattersvc.Unauthorized {
-	v := chattersvc.Unauthorized(body)
+func NewLoginUnauthorized(body LoginUnauthorizedResponseBody) chatter.Unauthorized {
+	v := chatter.Unauthorized(body)
 	return v
 }
 
 // NewEchoerInvalidScopes builds a chatter service echoer endpoint
 // invalid-scopes error.
-func NewEchoerInvalidScopes(body EchoerInvalidScopesResponseBody) chattersvc.InvalidScopes {
-	v := chattersvc.InvalidScopes(body)
+func NewEchoerInvalidScopes(body EchoerInvalidScopesResponseBody) chatter.InvalidScopes {
+	v := chatter.InvalidScopes(body)
 	return v
 }
 
 // NewEchoerUnauthorized builds a chatter service echoer endpoint unauthorized
 // error.
-func NewEchoerUnauthorized(body EchoerUnauthorizedResponseBody) chattersvc.Unauthorized {
-	v := chattersvc.Unauthorized(body)
+func NewEchoerUnauthorized(body EchoerUnauthorizedResponseBody) chatter.Unauthorized {
+	v := chatter.Unauthorized(body)
 	return v
 }
 
 // NewListenerInvalidScopes builds a chatter service listener endpoint
 // invalid-scopes error.
-func NewListenerInvalidScopes(body ListenerInvalidScopesResponseBody) chattersvc.InvalidScopes {
-	v := chattersvc.InvalidScopes(body)
+func NewListenerInvalidScopes(body ListenerInvalidScopesResponseBody) chatter.InvalidScopes {
+	v := chatter.InvalidScopes(body)
 	return v
 }
 
 // NewListenerUnauthorized builds a chatter service listener endpoint
 // unauthorized error.
-func NewListenerUnauthorized(body ListenerUnauthorizedResponseBody) chattersvc.Unauthorized {
-	v := chattersvc.Unauthorized(body)
+func NewListenerUnauthorized(body ListenerUnauthorizedResponseBody) chatter.Unauthorized {
+	v := chatter.Unauthorized(body)
 	return v
 }
 
 // NewSummaryChatSummaryCollectionOK builds a "chatter" service "summary"
 // endpoint result from a HTTP "OK" response.
-func NewSummaryChatSummaryCollectionOK(body SummaryResponseBody) chattersvcviews.ChatSummaryCollectionView {
-	v := make([]*chattersvcviews.ChatSummaryView, len(body))
+func NewSummaryChatSummaryCollectionOK(body SummaryResponseBody) chatterviews.ChatSummaryCollectionView {
+	v := make([]*chatterviews.ChatSummaryView, len(body))
 	for i, val := range body {
-		v[i] = &chattersvcviews.ChatSummaryView{
+		v[i] = &chatterviews.ChatSummaryView{
 			Message: val.Message,
 			Length:  val.Length,
 			SentAt:  val.SentAt,
@@ -126,22 +126,22 @@ func NewSummaryChatSummaryCollectionOK(body SummaryResponseBody) chattersvcviews
 
 // NewSummaryInvalidScopes builds a chatter service summary endpoint
 // invalid-scopes error.
-func NewSummaryInvalidScopes(body SummaryInvalidScopesResponseBody) chattersvc.InvalidScopes {
-	v := chattersvc.InvalidScopes(body)
+func NewSummaryInvalidScopes(body SummaryInvalidScopesResponseBody) chatter.InvalidScopes {
+	v := chatter.InvalidScopes(body)
 	return v
 }
 
 // NewSummaryUnauthorized builds a chatter service summary endpoint
 // unauthorized error.
-func NewSummaryUnauthorized(body SummaryUnauthorizedResponseBody) chattersvc.Unauthorized {
-	v := chattersvc.Unauthorized(body)
+func NewSummaryUnauthorized(body SummaryUnauthorizedResponseBody) chatter.Unauthorized {
+	v := chatter.Unauthorized(body)
 	return v
 }
 
 // NewHistoryChatSummaryOK builds a "chatter" service "history" endpoint result
 // from a HTTP "OK" response.
-func NewHistoryChatSummaryOK(body *HistoryResponseBody) *chattersvcviews.ChatSummaryView {
-	v := &chattersvcviews.ChatSummaryView{
+func NewHistoryChatSummaryOK(body *HistoryResponseBody) *chatterviews.ChatSummaryView {
+	v := &chatterviews.ChatSummaryView{
 		Message: body.Message,
 		Length:  body.Length,
 		SentAt:  body.SentAt,
@@ -151,15 +151,15 @@ func NewHistoryChatSummaryOK(body *HistoryResponseBody) *chattersvcviews.ChatSum
 
 // NewHistoryInvalidScopes builds a chatter service history endpoint
 // invalid-scopes error.
-func NewHistoryInvalidScopes(body HistoryInvalidScopesResponseBody) chattersvc.InvalidScopes {
-	v := chattersvc.InvalidScopes(body)
+func NewHistoryInvalidScopes(body HistoryInvalidScopesResponseBody) chatter.InvalidScopes {
+	v := chatter.InvalidScopes(body)
 	return v
 }
 
 // NewHistoryUnauthorized builds a chatter service history endpoint
 // unauthorized error.
-func NewHistoryUnauthorized(body HistoryUnauthorizedResponseBody) chattersvc.Unauthorized {
-	v := chattersvc.Unauthorized(body)
+func NewHistoryUnauthorized(body HistoryUnauthorizedResponseBody) chatter.Unauthorized {
+	v := chatter.Unauthorized(body)
 	return v
 }
 

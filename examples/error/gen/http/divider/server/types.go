@@ -10,7 +10,7 @@ package server
 
 import (
 	goa "goa.design/goa"
-	dividersvc "goa.design/goa/examples/error/gen/divider"
+	divider "goa.design/goa/examples/error/gen/divider"
 )
 
 // IntegerDivideHasRemainderResponseBody is the type of the "divider" service
@@ -175,16 +175,16 @@ func NewDivideTimeoutResponseBody(res *goa.ServiceError) *DivideTimeoutResponseB
 
 // NewIntegerDivideIntOperands builds a divider service integer_divide endpoint
 // payload.
-func NewIntegerDivideIntOperands(a int, b int) *dividersvc.IntOperands {
-	return &dividersvc.IntOperands{
+func NewIntegerDivideIntOperands(a int, b int) *divider.IntOperands {
+	return &divider.IntOperands{
 		A: a,
 		B: b,
 	}
 }
 
 // NewDivideFloatOperands builds a divider service divide endpoint payload.
-func NewDivideFloatOperands(a float64, b float64) *dividersvc.FloatOperands {
-	return &dividersvc.FloatOperands{
+func NewDivideFloatOperands(a float64, b float64) *divider.FloatOperands {
+	return &divider.FloatOperands{
 		A: a,
 		B: b,
 	}

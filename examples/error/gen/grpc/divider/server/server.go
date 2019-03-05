@@ -12,7 +12,7 @@ import (
 	"context"
 
 	"goa.design/goa"
-	dividersvc "goa.design/goa/examples/error/gen/divider"
+	divider "goa.design/goa/examples/error/gen/divider"
 	dividerpb "goa.design/goa/examples/error/gen/grpc/divider/pb"
 	goagrpc "goa.design/goa/grpc"
 	"google.golang.org/grpc/codes"
@@ -31,7 +31,7 @@ type ErrorNamer interface {
 }
 
 // New instantiates the server struct with the divider service endpoints.
-func New(e *dividersvc.Endpoints, uh goagrpc.UnaryHandler) *Server {
+func New(e *divider.Endpoints, uh goagrpc.UnaryHandler) *Server {
 	return &Server{
 		IntegerDivideH: NewIntegerDivideHandler(e.IntegerDivide, uh),
 		DivideH:        NewDivideHandler(e.Divide, uh),

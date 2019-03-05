@@ -53,11 +53,11 @@ func NewSecureResponse(result string) *secured_servicepb.SecureResponse {
 
 // NewDoublySecurePayload builds the payload of the "doubly_secure" endpoint of
 // the "secured_service" service from the gRPC request type.
-func NewDoublySecurePayload(message *secured_servicepb.DoublySecureRequest, token string) *securedservice.DoublySecurePayload {
+func NewDoublySecurePayload(message *secured_servicepb.DoublySecureRequest, token2 string) *securedservice.DoublySecurePayload {
 	payload := &securedservice.DoublySecurePayload{
 		Key: message.Key,
 	}
-	payload.Token = token
+	payload.Token = token2
 	return payload
 }
 
@@ -71,14 +71,14 @@ func NewDoublySecureResponse(result string) *secured_servicepb.DoublySecureRespo
 
 // NewAlsoDoublySecurePayload builds the payload of the "also_doubly_secure"
 // endpoint of the "secured_service" service from the gRPC request type.
-func NewAlsoDoublySecurePayload(message *secured_servicepb.AlsoDoublySecureRequest, oauthToken *string, token *string) *securedservice.AlsoDoublySecurePayload {
+func NewAlsoDoublySecurePayload(message *secured_servicepb.AlsoDoublySecureRequest, oauthToken *string, token2 *string) *securedservice.AlsoDoublySecurePayload {
 	payload := &securedservice.AlsoDoublySecurePayload{
 		Username: &message.Username,
 		Password: &message.Password,
 		Key:      &message.Key,
 	}
 	payload.OauthToken = oauthToken
-	payload.Token = token
+	payload.Token = token2
 	return payload
 }
 

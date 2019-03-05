@@ -1,24 +1,24 @@
-package calc
+package calcapi
 
 import (
 	"context"
 	"log"
 
-	calcsvc "goa.design/goa/examples/basic/gen/calc"
+	calc "goa.design/goa/examples/basic/gen/calc"
 )
 
 // calc service example implementation.
 // The example methods log the requests and return zero values.
-type calcSvc struct {
+type calcsrvc struct {
 	logger *log.Logger
 }
 
 // NewCalc returns the calc service implementation.
-func NewCalc(logger *log.Logger) calcsvc.Service {
-	return &calcSvc{logger}
+func NewCalc(logger *log.Logger) calc.Service {
+	return &calcsrvc{logger}
 }
 
 // Add implements add.
-func (s *calcSvc) Add(ctx context.Context, p *calcsvc.AddPayload) (int, error) {
+func (s *calcsrvc) Add(ctx context.Context, p *calc.AddPayload) (res int, err error) {
 	return p.A + p.B, nil
 }

@@ -13,7 +13,7 @@ import (
 	"net/http"
 
 	goa "goa.design/goa"
-	calcsvc "goa.design/goa/examples/basic/gen/calc"
+	calc "goa.design/goa/examples/basic/gen/calc"
 	goahttp "goa.design/goa/http"
 )
 
@@ -42,7 +42,7 @@ type MountPoint struct {
 
 // New instantiates HTTP handlers for all the calc service endpoints.
 func New(
-	e *calcsvc.Endpoints,
+	e *calc.Endpoints,
 	mux goahttp.Muxer,
 	dec func(*http.Request) goahttp.Decoder,
 	enc func(context.Context, http.ResponseWriter) goahttp.Encoder,
