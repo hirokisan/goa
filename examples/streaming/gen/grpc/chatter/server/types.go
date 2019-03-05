@@ -53,9 +53,9 @@ func NewEchoerStreamingRequest(v *chatterpb.EchoerStreamingRequest) string {
 
 // NewListenerPayload builds the payload of the "listener" endpoint of the
 // "chatter" service from the gRPC request type.
-func NewListenerPayload(token2 string) *chatter.ListenerPayload {
+func NewListenerPayload(token string) *chatter.ListenerPayload {
 	payload := &chatter.ListenerPayload{}
-	payload.Token = token2
+	payload.Token = token
 	return payload
 }
 
@@ -66,9 +66,9 @@ func NewListenerStreamingRequest(v *chatterpb.ListenerStreamingRequest) string {
 
 // NewSummaryPayload builds the payload of the "summary" endpoint of the
 // "chatter" service from the gRPC request type.
-func NewSummaryPayload(token2 string) *chatter.SummaryPayload {
+func NewSummaryPayload(token string) *chatter.SummaryPayload {
 	payload := &chatter.SummaryPayload{}
-	payload.Token = token2
+	payload.Token = token
 	return payload
 }
 
@@ -97,10 +97,10 @@ func NewSummaryStreamingRequest(v *chatterpb.SummaryStreamingRequest) string {
 
 // NewHistoryPayload builds the payload of the "history" endpoint of the
 // "chatter" service from the gRPC request type.
-func NewHistoryPayload(view *string, token2 string) *chatter.HistoryPayload {
+func NewHistoryPayload(view *string, token string) *chatter.HistoryPayload {
 	payload := &chatter.HistoryPayload{}
 	payload.View = view
-	payload.Token = token2
+	payload.Token = token
 	return payload
 }
 

@@ -124,14 +124,14 @@ func EncodeDoublySecureResponse(ctx context.Context, v interface{}, hdr, trlr *m
 // "doubly_secure" endpoint.
 func DecodeDoublySecureRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
 	var (
-		token2 string
-		err    error
+		token string
+		err   error
 	)
 	{
 		if vals := md.Get("authorization"); len(vals) == 0 {
 			err = goa.MergeErrors(err, goa.MissingFieldError("authorization", "metadata"))
 		} else {
-			token2 = vals[0]
+			token = vals[0]
 		}
 	}
 	if err != nil {
@@ -148,7 +148,7 @@ func DecodeDoublySecureRequest(ctx context.Context, v interface{}, md metadata.M
 	}
 	var payload *securedservice.DoublySecurePayload
 	{
-		payload = NewDoublySecurePayload(message, token2)
+		payload = NewDoublySecurePayload(message, token)
 		if strings.Contains(payload.Token, " ") {
 			// Remove authorization scheme prefix (e.g. "Bearer")
 			cred := strings.SplitN(payload.Token, " ", 2)[1]
@@ -174,7 +174,7 @@ func EncodeAlsoDoublySecureResponse(ctx context.Context, v interface{}, hdr, trl
 func DecodeAlsoDoublySecureRequest(ctx context.Context, v interface{}, md metadata.MD) (interface{}, error) {
 	var (
 		oauthToken *string
-		token2     *string
+		token      *string
 		err        error
 	)
 	{
@@ -182,7 +182,7 @@ func DecodeAlsoDoublySecureRequest(ctx context.Context, v interface{}, md metada
 			oauthToken = &vals[0]
 		}
 		if vals := md.Get("authorization"); len(vals) > 0 {
-			token2 = &vals[0]
+			token = &vals[0]
 		}
 	}
 	if err != nil {
@@ -199,7 +199,7 @@ func DecodeAlsoDoublySecureRequest(ctx context.Context, v interface{}, md metada
 	}
 	var payload *securedservice.AlsoDoublySecurePayload
 	{
-		payload = NewAlsoDoublySecurePayload(message, oauthToken, token2)
+		payload = NewAlsoDoublySecurePayload(message, oauthToken, token)
 		if payload.Token != nil {
 			if strings.Contains(*payload.Token, " ") {
 				// Remove authorization scheme prefix (e.g. "Bearer")

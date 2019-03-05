@@ -43,43 +43,43 @@ func BuildEchoerPayload(chatterEchoerToken string) (*chatter.EchoerPayload, erro
 
 // BuildListenerPayload builds the payload for the chatter listener endpoint
 // from CLI flags.
-func BuildListenerPayload(chatterListenerToken2 string) (*chatter.ListenerPayload, error) {
-	var token2 string
+func BuildListenerPayload(chatterListenerToken string) (*chatter.ListenerPayload, error) {
+	var token string
 	{
-		token2 = chatterListenerToken2
+		token = chatterListenerToken
 	}
 	payload := &chatter.ListenerPayload{}
-	payload.Token = token2
+	payload.Token = token
 	return payload, nil
 }
 
 // BuildSummaryPayload builds the payload for the chatter summary endpoint from
 // CLI flags.
-func BuildSummaryPayload(chatterSummaryToken2 string) (*chatter.SummaryPayload, error) {
-	var token2 string
+func BuildSummaryPayload(chatterSummaryToken string) (*chatter.SummaryPayload, error) {
+	var token string
 	{
-		token2 = chatterSummaryToken2
+		token = chatterSummaryToken
 	}
 	payload := &chatter.SummaryPayload{}
-	payload.Token = token2
+	payload.Token = token
 	return payload, nil
 }
 
 // BuildHistoryPayload builds the payload for the chatter history endpoint from
 // CLI flags.
-func BuildHistoryPayload(chatterHistoryView string, chatterHistoryToken2 string) (*chatter.HistoryPayload, error) {
+func BuildHistoryPayload(chatterHistoryView string, chatterHistoryToken string) (*chatter.HistoryPayload, error) {
 	var view *string
 	{
 		if chatterHistoryView != "" {
 			view = &chatterHistoryView
 		}
 	}
-	var token2 string
+	var token string
 	{
-		token2 = chatterHistoryToken2
+		token = chatterHistoryToken
 	}
 	payload := &chatter.HistoryPayload{}
 	payload.View = view
-	payload.Token = token2
+	payload.Token = token
 	return payload, nil
 }
