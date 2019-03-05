@@ -12,24 +12,16 @@ import (
 // AuthFuncsFile returns a file that contains a dummy implementation of the
 // authorization functions needed to instantiate the service endpoints.
 func AuthFuncsFile(genpkg string, root *expr.RootExpr) *codegen.File {
-	var (
-		apiPkg   = codegen.APIPkg(root)
-		rootPath = "."
-		filepath = "auth.go"
-	)
-	{
-		if _, err := os.Stat(filepath); !os.IsNotExist(err) {
-			return nil // file already exists, skip it.
-		}
-		idx := strings.LastIndex(genpkg, string(os.PathSeparator))
-		if idx > 0 {
-			rootPath = genpkg[:idx]
-		}
+	filepath := "auth.go"
+	if _, err := os.Stat(filepath); !os.IsNotExist(err) {
+		return nil // file already exists, skip it.
 	}
 
 	var (
 		sections []*codegen.SectionTemplate
 		generate bool
+
+		scope = codegen.NewNameScope()
 	)
 	{
 		specs := []*codegen.ImportSpec{
@@ -37,15 +29,15 @@ func AuthFuncsFile(genpkg string, root *expr.RootExpr) *codegen.File {
 			{Path: "fmt"},
 			{Path: "goa.design/goa", Name: "goa"},
 			{Path: "goa.design/goa/security"},
-			{Path: rootPath, Name: apiPkg},
 		}
 		for _, svc := range root.Services {
-			pkgName := Services.Get(svc.Name).PkgName
 			specs = append(specs, &codegen.ImportSpec{
 				Path: path.Join(genpkg, codegen.SnakeCase(svc.Name)),
-				Name: pkgName,
+				Name: scope.Unique(Services.Get(svc.Name).PkgName),
 			})
 		}
+
+		apiPkg := scope.Unique(strings.ToLower(codegen.Goify(root.API.Name, false)), "api")
 		header := codegen.Header("", apiPkg, specs)
 		sections = []*codegen.SectionTemplate{header}
 		for _, s := range root.Services {
