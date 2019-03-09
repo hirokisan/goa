@@ -3,8 +3,8 @@ package design_test
 import (
 	"path"
 
-	"github.com/goadesign/goa/design"
-	"github.com/goadesign/goa/dslengine"
+	"github.com/hirokisan/goa/design"
+	"github.com/hirokisan/goa/dslengine"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )

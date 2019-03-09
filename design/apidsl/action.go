@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"unicode"
 
-	"github.com/goadesign/goa/design"
-	"github.com/goadesign/goa/dslengine"
+	"github.com/hirokisan/goa/design"
+	"github.com/hirokisan/goa/dslengine"
 )
 
 // Files used in: Resource

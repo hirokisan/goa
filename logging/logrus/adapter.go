@@ -18,7 +18,7 @@ import (
 
 	"context"
 
-	"github.com/goadesign/goa"
+	"github.com/hirokisan/goa"
 	"github.com/sirupsen/logrus"
 )
 

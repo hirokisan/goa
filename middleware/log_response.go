@@ -3,7 +3,7 @@ package middleware
 import (
 	"net/http"
 
-	"github.com/goadesign/goa"
+	"github.com/hirokisan/goa"
 
 	"context"
 )

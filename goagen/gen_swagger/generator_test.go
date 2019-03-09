@@ -1,8 +1,8 @@
 package genswagger_test
 
 import (
-	"github.com/goadesign/goa/design"
-	genswagger "github.com/goadesign/goa/goagen/gen_swagger"
+	"github.com/hirokisan/goa/design"
+	genswagger "github.com/hirokisan/goa/goagen/gen_swagger"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
